@@ -16,6 +16,12 @@ link do código que pegamos de base: https://github.com/marcoscastro/kmeans/blob
     - Para executar
         .kmeans_OMP.exe [número de threads] < large_dataset.txt
 
+## kmeans_MPI.cpp
+    - Para compilar
+        .mpic++ -fopenmp -o kmeans_MPI kmeans_MPI.cpp
+    - Para executar
+        .mpirun -np 1 kmeans_MPI.exe 4 < large_dataset.txt
+
 # Visão Geral do Algoritmo K-Means
 
 O algoritmo K-Means é um método de aprendizado não supervisionado usado para agrupar pontos de dados em K clusters com base em suas características. O objetivo é minimizar a variância dentro dos clusters e maximizar a variância entre os clusters.
@@ -74,7 +80,6 @@ Objetivo: Implementa o algoritmo K-Means.
 
 
 # OpenMP
-## Comparação entre o Código Original e o Código Paralelizado
 
 1. Modificação da Função main para Aceitar o Número de Threads
 
@@ -138,12 +143,46 @@ Objetivo: Implementa o algoritmo K-Means.
         Fixamos a semente aleatória (srand(0);) para garantir reprodutibilidade nos testes.
 
 
-
-
 # MPI
 
-##
+## Detalhes Importantes:
 
+1. Paralelização com MPI:
+    Divisão dos Dados: Cada processo recebe uma porção dos pontos para processar.
+    Inicialização dos Clusters: Feita apenas pelo processo de rank 0 e os centroides são transmitidos para os demais processos.
+    Comunicação entre Processos:
+        .MPI_Bcast: Usado para transmitir dados do processo de rank 0 para todos os outros (ex.: parâmetros e centroides iniciais).
+        .MPI_Allreduce: Usado para combinar dados de todos os processos (ex.: somas e contagens para atualizar centroides, verificação da condição de parada).
+    Paralelização com OpenMP:
+        Utilizado para paralelizar loops dentro de cada processo, aproveitando múltiplas threads (ex.: atribuição de pontos aos clusters).
+    Condição de Parada:
+        O algoritmo para quando não há mais mudanças na atribuição dos pontos aos clusters (done == true) ou quando o número máximo de iterações é alcançado.
+
+
+2. Inicialização do MPI:
+    MPI_Init: Inicializa o ambiente MPI.
+    MPI_Comm_rank: Obtém o identificador (rank) do processo atual.
+    MPI_Comm_size: Obtém o número total de processos.
+
+3. Semente Aleatória: Cada processo inicializa a semente aleatória com base em seu rank para evitar duplicação.
+Parâmetros de Execução:
+
+4. O número de threads é obtido dos argumentos de linha de comando (padrão é 1).
+    omp_set_num_threads: Define o número de threads para OpenMP.
+5. Leitura dos Dados:
+    O processo de rank 0 lê os dados de entrada (número de pontos, dimensões, etc.).
+    Os dados dos pontos são armazenados em all_points.
+6. Broadcast dos Dados:
+    Os parâmetros e os dados dos pontos são transmitidos para todos os processos usando MPI_Bcast.
+    Reconstrução dos Pontos:
+        Os outros processos (rank != 0) reconstróem o vetor all_points a partir dos dados recebidos.
+7. Execução do Algoritmo:
+    O método run da classe KMeans é chamado, passando all_points, o rank e o tamanho do comunicador.
+8. Cronometragem:
+    O tempo de execução é medido usando std::chrono.
+    Apenas o processo de rank 0 exibe o tempo total de execução.
+9. Finalização do MPI:
+    MPI_Finalize: Finaliza o ambiente MPI.
 
 
 
