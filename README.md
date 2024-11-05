@@ -1,6 +1,20 @@
 # Projeto01-CP
 Repositório para o projeto 01 da matéria de computação paralela
-link: https://github.com/marcoscastro/kmeans/blob/master/kmeans.cpp
+link do código que pegamos de base: https://github.com/marcoscastro/kmeans/blob/master/kmeans.cpp
+
+# Instruções
+
+## kmeans.cpp
+    - Para compilar
+        .g++ -o kmeans kmeans.cpp
+    - Para executar
+        .kmeans.exe < large_dataset.txt
+
+## kmeans_OMP.cpp
+    - Para compilar
+        .g++ -fopenmp -o kmeans_OMP kmeans_OMP.cpp
+    - Para executar
+        .kmeans_OMP.exe [número de threads] < large_dataset.txt
 
 # Visão Geral do Algoritmo K-Means
 
@@ -59,8 +73,8 @@ Objetivo: Implementa o algoritmo K-Means.
         run(vector<Point> & points): Método principal que executa o algoritmo K-Means nos pontos fornecidos.
 
 
-## OpenMP
-# Comparação entre o Código Original e o Código Paralelizado
+# OpenMP
+## Comparação entre o Código Original e o Código Paralelizado
 
 1. Modificação da Função main para Aceitar o Número de Threads
 
@@ -126,7 +140,9 @@ Objetivo: Implementa o algoritmo K-Means.
 
 
 
-## MPI
+# MPI
+
+##
 
 
 

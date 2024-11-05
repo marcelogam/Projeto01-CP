@@ -41,8 +41,8 @@ def generate_large_dataset(filename, num_points):
 
 
 # Especificar o número de pontos e o nome do arquivo
-num_points = 100000  # Número grande de pontos
-filename = "large_dataset.txt"
+num_points = 1000000  # Número grande de pontos
+filename = "largest_dataset.txt"
 
 # Gerar o dataset
 generate_large_dataset(filename, num_points)
