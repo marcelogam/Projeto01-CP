@@ -183,35 +183,3 @@ Parâmetros de Execução:
     Apenas o processo de rank 0 exibe o tempo total de execução.
 9. Finalização do MPI:
     MPI_Finalize: Finaliza o ambiente MPI.
-
-
-
-
-
-
-
-
-
-
-Considerações para a Apresentação
-Explique o Contexto das Modificações:
-
-Foque em como o paralelismo foi introduzido para melhorar o desempenho.
-Discuta os desafios enfrentados, como condições de corrida e necessidade de sincronização.
-Destaque os Benefícios do Paralelismo:
-
-Apresente comparações de tempos de execução entre a versão sequencial e as versões paralelas com diferentes números de threads.
-Explique como o OpenMP simplificou a paralelização do código.
-Mencione as Boas Práticas Adotadas:
-
-Uso de reduções para variáveis compartilhadas.
-Evitar atualizações concorrentes em estruturas de dados complexas dentro de regiões paralelas.
-Aborde Possíveis Limitações:
-
-Discuta a escalabilidade do algoritmo e onde podem surgir gargalos mesmo com paralelismo.
-Mencione a influência da escolha dos centroides iniciais e como a aleatoriedade pode afetar os resultados.
-Conclua com Lições Aprendidas:
-
-A importância de entender a lógica do algoritmo para paralelizá-lo efetivamente.
-Como o paralelismo pode ser aplicado para melhorar o desempenho em problemas de processamento intensivo.
-
